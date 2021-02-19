@@ -28,14 +28,18 @@ const LUKE = {
     "url": "http://swapi.dev/api/people/1/"
   }
   
-  const repeat = (times, obj) => {
+  const repeat = (times, obj, transform) => {
     const result = []
+    const transObj = transform
+        ? transform
+        : o => ({ ...o })
+
     for (let i = 0; i < times; i++) {
-      result.push({ ...obj })
+      result.push(transObj(obj))
     }
     return result
   }
   
-  const MOCK_DATA = repeat(5, LUKE)
+  const MOCK_DATA = repeat(5, LUKE, o => ({ ...o, id: new Date().toString() }))
 
   export default MOCK_DATA
