@@ -1,6 +1,16 @@
 import React from 'react'
-import './App.css'
+import { ThemeProvider, createGlobalStyle } from 'styled-components'
+import theme from './theme'
 
+import MOCK_DATA from './mock-data'
+
+import Character from './components/Character'
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${({ theme }) => theme.color.primary}
+  }
+`
 const App = () => {
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
@@ -10,9 +20,17 @@ const App = () => {
   // sync up with, if any.
 
   return (
-    <div className="App">
-      <h1 className="Header">Characters</h1>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <div className="App">
+        <h1 className="Header">SWAPI</h1>
+        <div>
+          {MOCK_DATA.map(char => {
+            return <Character character={char}/>
+          })}
+        </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
